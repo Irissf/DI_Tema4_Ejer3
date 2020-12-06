@@ -25,7 +25,7 @@ namespace DI_Tema4_Ejer3
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
 
-                ofd.InitialDirectory = "c:\\";
+                ofd.InitialDirectory = Environment.GetEnvironmentVariable("HOME");
                 ofd.Filter = "Todos los archivos(*.*)|*.*|Imagen png (*.png)|*.png| Imagen jpg(*jpg)|*.jpg";
                 ofd.FilterIndex = 1;
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -35,16 +35,25 @@ namespace DI_Tema4_Ejer3
                     {
                         Form2 f2 = new Form2();
                         f2.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
-                        f2.pictureBox1.Image = new Bitmap(path);
-                        f2.Size = new Size(f2.pictureBox1.Image.Width, f2.pictureBox1.Image.Height);
-                        if (checkBox1.Checked)
+                        try
                         {
-                            f2.ShowDialog();
+                            f2.pictureBox1.Image = new Bitmap(path);
+                            f2.Size = new Size(f2.pictureBox1.Image.Width, f2.pictureBox1.Image.Height);
+                            if (checkBox1.Checked)
+                            {
+                                f2.ShowDialog();
+                            }
+                            else
+                            {
+                                f2.Show();
+                            }
                         }
-                        else
+                        catch (ArgumentException)
                         {
-                            f2.Show();
+                            MessageBox.Show("Imagen corrupta");
                         }
+
+                        
 
                     }
                     else
