@@ -52,6 +52,9 @@ namespace DI_Tema4_Ejer3
                         {
                             MessageBox.Show("Imagen corrupta");
                         }
+                        catch (OutOfMemoryException) {
+                            MessageBox.Show("Imagen corrupta");
+                        }
 
                         
 
